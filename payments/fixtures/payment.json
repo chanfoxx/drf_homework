@@ -1,0 +1,16 @@
+[
+  {
+    "user": 1,
+    "paid_course": 1,
+    "paid_lesson": null,
+    "amount": 3999,
+    "payment_method": "TRF"
+  },
+  {
+    "user": 1,
+    "paid_course": null,
+    "paid_lesson": 2,
+    "amount": 1299,
+    "payment_method": "CSH"
+  }
+]
