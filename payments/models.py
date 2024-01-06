@@ -9,10 +9,10 @@ class Payment(models.Model):
     CASH = "CSH"
     TRANSFER = "TRF"
 
-    PAYMENT_METHOD_CHOICES = {
-        CASH: "Cash",
-        TRANSFER: "Transfer to account",
-    }
+    PAYMENT_METHOD_CHOICES = (
+        (CASH, "Cash"),
+        (TRANSFER, "Transfer to account"),
+    )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE,
