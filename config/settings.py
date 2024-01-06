@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework_simplejwt',
     'drf_yasg',
+    'django_celery_beat',
 
     'users',
     'online_courses',
@@ -176,8 +177,43 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
-
 # Переменные окружения для API платежей.
 # https://stripe.com/docs/api
 
 STRIPE_API_KEY = os.getenv('STRIPE_API_KEY')
+
+# Celery
+# https://docs.celeryq.dev/en/main/django/first-steps-with-django.html
+
+# URL-адрес брокера сообщений
+CELERY_BROKER_URL = 'redis://localhost:6379'
+
+# URL-адрес брокера результатов
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
+# Часовой пояс для работы Celery
+CELERY_TIMEZONE = "Europe/Moscow"
+
+# Флаг отслеживания выполнения задач
+CELERY_TASK_TRACK_STARTED = True
+
+# Максимальное время на выполнение задачи
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+# https://django-celery-beat.readthedocs.io/en/latest/
+# Celery beat
+CELERY_BEAT_SCHEDULE = {
+    'task-name': {
+        'task': 'users.tasks.block_inactive_user',  # Путь к задаче
+        'schedule': timedelta(days=1),  # Расписание выполнения задачи (например, каждые 10 минут)
+    },
+}
+
+# User email settings
+# https://docs.djangoproject.com/en/4.2/ref/settings/#email-host
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.getenv('EMAIL_APP')
+EMAIL_HOST_PASSWORD = os.getenv('APP_PASSWORD')
+EMAIL_USE_SSL = True

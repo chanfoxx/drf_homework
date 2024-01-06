@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 from users.models import NULLABLE
 
@@ -15,11 +16,18 @@ class Course(models.Model):
                                    verbose_name='Описание')
     stripe_product_name = models.CharField(max_length=150,
                                            **NULLABLE)
+    last_updated = models.DateTimeField(default=timezone.now,
+                                        verbose_name='Время последнего обновления')
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.SET_NULL,
                               verbose_name='Автор курса',
                               default=1,
                               **NULLABLE)
+
+    def save(self, *args, **kwargs):
+        """ Обновляет поле last_updated. """
+        self.last_updated = timezone.now()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         """ Возвращает строковое представление о модели курса. """
