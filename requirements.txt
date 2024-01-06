@@ -5,3 +5,6 @@ pillow
 python-dotenv
 django-filter
 djangorestframework-simplejwt
+redis
+celery
+django-celery-beat
