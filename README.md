@@ -37,6 +37,20 @@
 /online_courses/views/ - контроллеры.
 
 
+/payments/ - приложение платежей.
+
+/payments/fixture/ - фикстуры платежей.
+
+/payments/management/commands/ - кастомные команды.
+
+/payments/migrations/ - миграции для приложения.
+
+
+/subscriptions/ - приложение подписок.
+
+/subscriptions/migrations/ - миграции для приложения.
+
+
 /users/ - приложение пользователя.
 
 /users/management/commands/ - кастомные команды.
@@ -55,6 +69,10 @@
 8. Запустите веб-приложение:
 - либо через конфигурационные настройки PyCharm.
 - либо через команду в терминале: python3 manage.py runserver
+9. Для периодических задач использовать команды:
+(worker): celery -A config worker -l INFO
+(beat): celery -A config beat -l info -S django 
+
 
 ## Пример веб-приложения
 
