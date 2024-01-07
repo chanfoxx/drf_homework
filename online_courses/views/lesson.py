@@ -56,7 +56,7 @@ class LessonUpdateAPIView(generics.UpdateAPIView):
     queryset = Lesson.objects.all()
     permission_classes = [IsAuthenticated, IsModerator | IsOwner]
 
-    def perform_create(self, serializer):
+    def perform_update(self, serializer):
         """ Создает отправку обновлений пользователям. """
         update_lesson = serializer.save()
         course = update_lesson.course
