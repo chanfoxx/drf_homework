@@ -9,3 +9,11 @@ class SubSerializer(serializers.ModelSerializer):
         """ Метаданные для сериалайзера модели подписок на обновления. """
         model = Subscription
         fields = '__all__'
+
+
+class SubBooleanSerializer(serializers.ModelSerializer):
+    """ Сериалайзер для модели подписки на обновления. """
+    class Meta:
+        """ Метаданные для сериалайзера модели подписок на обновления. """
+        model = Subscription
+        fields = ('is_subscribed',)
