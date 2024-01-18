@@ -1,8 +1,11 @@
 import stripe
+from drf_yasg.utils import swagger_serializer_method
 from rest_framework import serializers
 
 from online_courses.models import Course, Lesson
+from online_courses.serializers.lesson import LessonTitleSerializer
 from subscriptions.models import Subscription
+from subscriptions.serializers import SubBooleanSerializer
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -44,11 +47,13 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     lessons = serializers.SerializerMethodField(read_only=True)
     is_subscribed = serializers.SerializerMethodField(read_only=True)
 
+    @swagger_serializer_method(serializer_or_field=LessonTitleSerializer)
     def get_lessons(self, instance):
         """ Получает список уроков курса. """
         return [lesson.title
                 for lesson in Lesson.objects.filter(course=instance)]
 
+    @swagger_serializer_method(serializer_or_field=SubBooleanSerializer)
     def get_is_subscribed(self, instance):
         """ Получает статус подписки. """
         try:
