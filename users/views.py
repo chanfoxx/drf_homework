@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from users.models import User
 from users.permissions import IsUser
@@ -41,5 +41,7 @@ class UserViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAuthenticated]
         elif self.action == 'update' or self.action == 'destroy':
             permission_classes = [IsAuthenticated, IsUser]
+        else:
+            permission_classes = [AllowAny]
 
         return [permission() for permission in permission_classes]

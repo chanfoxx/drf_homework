@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         """ Метаданные для сериализатора модели пользователя. """
         model = User
-        fields = ('email', 'phone', 'city', 'avatar',)
+        fields = ('email', 'password', 'phone', 'city', 'avatar',)
 
 
 class UserDetailSerializer(serializers.ModelSerializer):

@@ -28,3 +28,12 @@ class LessonSerializer(serializers.ModelSerializer):
         model = Lesson
         fields = '__all__'
         validators = [LessonsLinkValidator(field='video_link')]
+
+
+class LessonTitleSerializer(serializers.ModelSerializer):
+    """ Сериализатор для модели урока. """
+
+    class Meta:
+        """ Метаданные для сериализатора модели урока. """
+        model = Lesson
+        fields = ('title',)
