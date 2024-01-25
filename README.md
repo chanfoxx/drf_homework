@@ -65,13 +65,18 @@
 4. Перейдите в корневую папку проекта и установите все зависимости из файла requirements.txt
 5. Создайте файл .env по шаблону .env.sample
 6. Установите миграции: python3 manage.py migrate
-7. Запустите кастомную команду чтобы создать супер пользователя: python3 manage.py createsuperuser
+7. Запустите команду, чтобы создать супер пользователя: python3 manage.py createsuperuser
 8. Запустите веб-приложение:
 - либо через конфигурационные настройки PyCharm.
 - либо через команду в терминале: python3 manage.py runserver
 9. Для периодических задач использовать команды:
 (worker): celery -A config worker -l INFO
 (beat): celery -A config beat -l info -S django
+10. DOCKER:
+- docker-compose build (собрать образ)
+- docker-compose exec app python manage.py migrate (выполнить миграции внутри контейнера)
+- docker-compose up (запустить контейнеры)
+- control + C (остановить)
 
 
 ## Ошибки и улучшения
