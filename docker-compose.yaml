@@ -1,14 +1,18 @@
-version: '3'
+version: '3.11'
 
 services:
 
   redis:
-    image: redis
+    image: redis:7.2.2-alpine
+    container_name: redis
     ports:
       - '6379:6379'
+    volumes:
+      - redis_data:/data
 
   db:
-    image: postgres
+    image: postgres:14.7-alpine
+    container_name: db
     env_file:
       - .env
     volumes:
@@ -16,15 +20,18 @@ services:
     ports:
       - '5432:5432'
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 10s
       timeout: 5s
       retries: 5
 
   app:
+    container_name: app
     build: .
+    env_file:
+      - .env
     tty: true
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000
     ports:
       - '8001:8000'
     depends_on:
@@ -32,20 +39,18 @@ services:
         condition: service_healthy
 
   celery:
+    container_name: celery
     build: .
     tty: true
-    command: celery -A config worker -l INFO
-    depends_on:
+    command: celery -A config worker --beat --loglevel=info
+    volumes:
+      - .:/app
+    links:
       - redis
-      - app
-
-  celery_beat:
-    build: .
-    tty: true
-    command: celery -A config beat -l info -S django
     depends_on:
       - redis
       - app
 
 volumes:
   pg_data:
+  redis_data:
