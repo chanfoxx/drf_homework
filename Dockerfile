@@ -1,8 +1,11 @@
 # Используем базовый образ Python
-FROM python:3
+FROM python:3.11-slim
 
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
+
+# Обновляем pip
+RUN pip install --upgrade pip
 
 # Копируем зависимости в контейнер
 COPY requirements.txt .

@@ -74,7 +74,6 @@
 (beat): celery -A config beat -l info -S django
 10. DOCKER:
 - docker-compose build (собрать образ)
-- docker-compose exec app python manage.py migrate (выполнить миграции внутри контейнера)
 - docker-compose up (запустить контейнеры)
 - control + C (остановить)
 
