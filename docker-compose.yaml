@@ -31,7 +31,9 @@ services:
     env_file:
       - .env
     tty: true
-    command: python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+    command: bash -c "python manage.py makemigrations 
+      && python manage.py migrate 
+      && python manage.py runserver 0.0.0.0:8000"
     ports:
       - '8001:8000'
     depends_on:
@@ -42,7 +44,7 @@ services:
     container_name: celery
     build: .
     tty: true
-    command: celery -A config worker --beat --loglevel=info
+    command: bash -c "celery -A config worker --beat --loglevel=info"
     volumes:
       - .:/app
     links:
