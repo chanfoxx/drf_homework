@@ -9,9 +9,9 @@ class Command(BaseCommand):
     """ Команда для создания супер пользователя. """
     def handle(self, *args, **kwargs):
         load_dotenv(dotenv_path=dot_env)
-        email_admin = os.getenv('EMAIL_PASSWORD')
+        email_admin = os.getenv('ADMIN_PASSWORD')
         user = User.objects.create(
-            email='cchloexx@yandex.ru',
+            email=os.getenv('ADMIN_EMAIL'),
             first_name='Admin',
             last_name='Admin',
             is_superuser=True,
