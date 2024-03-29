@@ -25,12 +25,12 @@ load_dotenv(dotenv_path=dot_env)
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6ij9yqe2a0=)y=7m1s*c=hky*bb@%z5+r6!tfa8cbq1(jfi-z5'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+DEBUG = int(os.getenv('DEBUG'))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
 
 # Application definition
 
@@ -93,8 +93,8 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB'),
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': 'db',  # Название сервиса в docker-compose.yaml
-        'PORT': '5432',
+        'HOST': os.getenv('POSTGRES_HOST'),  # Название сервиса в docker-compose.yaml
+        'PORT': os.getenv('POSTGRES_PORT'),
     }
 }
 
@@ -119,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = os.getenv('LANGUAGE_CODE')
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -188,10 +188,10 @@ STRIPE_API_KEY = os.getenv('STRIPE_API_KEY')
 # https://docs.celeryq.dev/en/main/django/first-steps-with-django.html
 
 # URL-адрес брокера сообщений
-CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
 
 # URL-адрес брокера результатов
-CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
 
 # Часовой пояс для работы Celery
 CELERY_TIMEZONE = "Europe/Moscow"
@@ -217,5 +217,5 @@ CELERY_BEAT_SCHEDULE = {
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = os.getenv('EMAIL_APP')
-EMAIL_HOST_PASSWORD = os.getenv('APP_PASSWORD')
+EMAIL_HOST_PASSWORD = os.getenv('PASSWORD_APP')
 EMAIL_USE_SSL = True
